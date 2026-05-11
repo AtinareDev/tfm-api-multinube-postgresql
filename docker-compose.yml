@@ -1,0 +1,66 @@
+services:
+  api:
+    build:
+      context: ./api
+    container_name: tfm_api
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./api:/app
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    depends_on:
+      - postgres_aws
+      - postgres_azure
+    networks:
+      - tfm_network
+
+  streamlit_app:
+    build:
+      context: ./streamlit_app
+    container_name: tfm_streamlit_app
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./streamlit_app:/app
+    environment:
+      API_URL: http://api:8000
+    depends_on:
+      - api
+    networks:
+      - tfm_network
+
+  postgres_aws:
+    image: postgres:16
+    container_name: tfm_postgres_aws
+    environment:
+      POSTGRES_USER: tfm_user
+      POSTGRES_PASSWORD: tfm_password
+      POSTGRES_DB: tfm_db
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_aws_data:/var/lib/postgresql/data
+    networks:
+      - tfm_network
+
+  postgres_azure:
+    image: postgres:16
+    container_name: tfm_postgres_azure
+    environment:
+      POSTGRES_USER: tfm_user
+      POSTGRES_PASSWORD: tfm_password
+      POSTGRES_DB: tfm_db
+    ports:
+      - "5434:5432"
+    volumes:
+      - postgres_azure_data:/var/lib/postgresql/data
+    networks:
+      - tfm_network
+
+volumes:
+  postgres_aws_data:
+  postgres_azure_data:
+
+networks:
+  tfm_network:
+    driver: bridge
