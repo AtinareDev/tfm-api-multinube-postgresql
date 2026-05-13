@@ -116,3 +116,31 @@ Los endpoints permiten:
 - Eliminar productos.
 
 La entidad `products` incluye información básica como nombre, descripción, precio y stock disponible.
+
+
+## Fase 2 - CRUD de pedidos
+
+Se ha implementado la gestión de pedidos mediante las entidades `orders` y `order_items`.
+
+La API permite crear pedidos asociados a un cliente existente y a uno o varios productos existentes. Durante la creación del pedido, el sistema calcula el importe total a partir del precio de los productos y la cantidad solicitada.
+
+También se ha añadido una validación básica de stock. Cuando se crea un pedido, el stock de los productos se reduce automáticamente. Si se elimina el pedido, el stock se restaura.
+
+Los endpoints implementados permiten crear, listar, consultar, actualizar el estado y eliminar pedidos.
+
+
+
+## Cierre de la Fase 2
+
+Al finalizar la Fase 2, la API dispone de un modelo de datos relacional completo para gestionar clientes, productos y pedidos.
+
+Se han implementado endpoints REST para las entidades principales:
+
+- `customers`
+- `products`
+- `orders`
+- `order_items`
+
+La API trabaja contra la base de datos activa configurada inicialmente como AWS simulada. Las dos bases PostgreSQL locales, AWS y Azure simuladas, comparten el mismo esquema relacional.
+
+La lógica de pedidos incluye validación de cliente, validación de productos, control básico de stock, cálculo automático del importe total y restauración de stock al eliminar pedidos.
