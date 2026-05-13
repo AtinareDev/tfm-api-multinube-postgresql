@@ -1,7 +1,11 @@
 from fastapi import FastAPI
 
 from app.core.config import settings
-from app.db.database import check_database_connection
+from app.db.database import (
+    check_database_connection,
+    init_all_databases,
+    list_all_database_tables,
+)
 
 app = FastAPI(
     title=settings.app_name,
@@ -47,3 +51,13 @@ def database_health_all():
             check_database_connection("azure"),
         ]
     }
+
+
+@app.post("/db/init")
+def database_init():
+    return init_all_databases()
+
+
+@app.get("/db/tables")
+def database_tables():
+    return list_all_database_tables()

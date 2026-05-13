@@ -1,7 +1,9 @@
-from sqlalchemy import create_engine, text
+from sqlalchemy import create_engine, inspect, text
 from sqlalchemy.engine import Engine
 
 from app.core.config import settings
+from app.db.base import Base
+from app import models
 
 
 def get_database_url(cloud: str | None = None) -> str:
@@ -47,3 +49,64 @@ def check_database_connection(cloud: str | None = None) -> dict:
             "status": "error",
             "error": str(error),
         }
+
+
+def init_database(cloud: str | None = None) -> dict:
+    selected_cloud = cloud or settings.active_cloud
+
+    try:
+        engine = create_database_engine(selected_cloud)
+        Base.metadata.create_all(bind=engine)
+
+        return {
+            "cloud": selected_cloud,
+            "status": "ok",
+            "message": "Tablas creadas correctamente",
+        }
+
+    except Exception as error:
+        return {
+            "cloud": selected_cloud,
+            "status": "error",
+            "error": str(error),
+        }
+
+
+def init_all_databases() -> dict:
+    return {
+        "databases": [
+            init_database("aws"),
+            init_database("azure"),
+        ]
+    }
+
+
+def list_database_tables(cloud: str | None = None) -> dict:
+    selected_cloud = cloud or settings.active_cloud
+
+    try:
+        engine = create_database_engine(selected_cloud)
+        inspector = inspect(engine)
+        tables = inspector.get_table_names()
+
+        return {
+            "cloud": selected_cloud,
+            "status": "ok",
+            "tables": tables,
+        }
+
+    except Exception as error:
+        return {
+            "cloud": selected_cloud,
+            "status": "error",
+            "error": str(error),
+        }
+
+
+def list_all_database_tables() -> dict:
+    return {
+        "databases": [
+            list_database_tables("aws"),
+            list_database_tables("azure"),
+        ]
+    }

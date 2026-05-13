@@ -39,3 +39,34 @@ La documentación interactiva se genera automáticamente mediante Swagger/OpenAP
 Se ha creado una aplicación cliente sencilla con Streamlit. Esta aplicación consume el endpoint `/health` de la API FastAPI para comprobar el estado del backend.
 
 La aplicación se ejecuta en Docker y queda expuesta en el puerto local `8501`.
+
+
+
+## Fase 2 - Conexión inicial con PostgreSQL
+
+Se ha añadido la conexión de la API FastAPI con las dos bases de datos PostgreSQL locales que simulan AWS y Azure.
+
+La API incorpora endpoints para consultar la cloud activa y comprobar la conectividad con la base de datos activa o con ambas bases de datos:
+
+- `/cloud/status`
+- `/db/health`
+- `/db/health/all`
+
+Inicialmente, la cloud activa configurada es AWS.
+
+
+
+## Fase 2 - Modelo de datos relacional
+
+Se ha definido el modelo de datos principal del sistema mediante SQLAlchemy.
+
+El dominio elegido para el TFM se basa en una gestión sencilla de negocio con las siguientes entidades:
+
+- `customers`: clientes.
+- `products`: productos.
+- `orders`: pedidos.
+- `order_items`: líneas de pedido.
+
+El modelo incluye relaciones entre clientes y pedidos, así como entre pedidos, líneas de pedido y productos.
+
+Las tablas se han creado en las dos bases PostgreSQL locales que simulan AWS y Azure.
