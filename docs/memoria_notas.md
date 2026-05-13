@@ -70,3 +70,18 @@ El dominio elegido para el TFM se basa en una gestión sencilla de negocio con l
 El modelo incluye relaciones entre clientes y pedidos, así como entre pedidos, líneas de pedido y productos.
 
 Las tablas se han creado en las dos bases PostgreSQL locales que simulan AWS y Azure.
+
+## Fase 2 - Esquemas de validación con Pydantic
+
+Se han creado los esquemas Pydantic para las entidades `customers` y `products`.
+
+Estos esquemas permiten validar los datos de entrada y estructurar las respuestas de la API. Se han definido esquemas separados para creación, actualización y lectura de datos:
+
+- `CustomerCreate`
+- `CustomerUpdate`
+- `CustomerRead`
+- `ProductCreate`
+- `ProductUpdate`
+- `ProductRead`
+
+Esta separación facilita construir endpoints REST más claros y seguros.
