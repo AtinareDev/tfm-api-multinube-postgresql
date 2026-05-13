@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 
+from app.api.routes.customers import router as customers_router
 from app.core.config import settings
 from app.db.database import (
     check_database_connection,
@@ -12,6 +13,8 @@ app = FastAPI(
     description="API para gestionar datos en una arquitectura multinube con PostgreSQL.",
     version=settings.app_version,
 )
+
+app.include_router(customers_router)
 
 
 @app.get("/")

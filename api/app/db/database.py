@@ -1,5 +1,6 @@
 from sqlalchemy import create_engine, inspect, text
 from sqlalchemy.engine import Engine
+from sqlalchemy.orm import Session, sessionmaker
 
 from app.core.config import settings
 from app.db.base import Base
@@ -25,6 +26,26 @@ def create_database_engine(cloud: str | None = None) -> Engine:
         database_url,
         pool_pre_ping=True,
     )
+
+
+def create_session_factory(cloud: str | None = None):
+    engine = create_database_engine(cloud)
+
+    return sessionmaker(
+        autocommit=False,
+        autoflush=False,
+        bind=engine,
+    )
+
+
+def get_db():
+    SessionLocal = create_session_factory()
+
+    db: Session = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 
 
 def check_database_connection(cloud: str | None = None) -> dict:

@@ -85,3 +85,19 @@ Estos esquemas permiten validar los datos de entrada y estructurar las respuesta
 - `ProductRead`
 
 Esta separación facilita construir endpoints REST más claros y seguros.
+
+
+
+## Fase 2 - CRUD de clientes
+
+Se ha implementado el primer conjunto de endpoints CRUD de la API para la entidad `customers`.
+
+Los endpoints permiten:
+
+- Crear clientes.
+- Listar clientes.
+- Consultar un cliente por identificador.
+- Actualizar los datos de un cliente.
+- Eliminar clientes.
+
+La API utiliza SQLAlchemy para acceder a PostgreSQL y Pydantic para validar los datos de entrada y salida.
