@@ -3,6 +3,7 @@ from fastapi import FastAPI
 from app.api.routes.customers import router as customers_router
 from app.api.routes.orders import router as orders_router
 from app.api.routes.products import router as products_router
+from app.core.cloud_state import get_active_cloud, get_available_clouds
 from app.core.config import settings
 from app.db.database import (
     check_database_connection,
@@ -40,8 +41,8 @@ def health_check():
 @app.get("/cloud/status")
 def cloud_status():
     return {
-        "active_cloud": settings.active_cloud,
-        "available_clouds": ["aws", "azure"],
+        "active_cloud": get_active_cloud(),
+        "available_clouds": get_available_clouds(),
     }
 
 

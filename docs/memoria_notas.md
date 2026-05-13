@@ -144,3 +144,13 @@ Se han implementado endpoints REST para las entidades principales:
 La API trabaja contra la base de datos activa configurada inicialmente como AWS simulada. Las dos bases PostgreSQL locales, AWS y Azure simuladas, comparten el mismo esquema relacional.
 
 La lógica de pedidos incluye validación de cliente, validación de productos, control básico de stock, cálculo automático del importe total y restauración de stock al eliminar pedidos.
+
+
+
+## Fase 3 - Estado dinámico de cloud activa
+
+Se ha sustituido el uso de una cloud activa fija por un mecanismo de estado dinámico almacenado en un archivo JSON local.
+
+La API puede consultar la cloud activa mediante `/cloud/status`, y la capa de conexión a base de datos utiliza dicho estado para decidir si las operaciones deben ejecutarse contra la base PostgreSQL que simula AWS o contra la base PostgreSQL que simula Azure.
+
+Inicialmente, la cloud activa se mantiene como `aws`.

@@ -2,13 +2,14 @@ from sqlalchemy import create_engine, inspect, text
 from sqlalchemy.engine import Engine
 from sqlalchemy.orm import Session, sessionmaker
 
+from app import models
+from app.core.cloud_state import get_active_cloud
 from app.core.config import settings
 from app.db.base import Base
-from app import models
 
 
 def get_database_url(cloud: str | None = None) -> str:
-    selected_cloud = cloud or settings.active_cloud
+    selected_cloud = cloud or get_active_cloud()
 
     if selected_cloud == "aws":
         return settings.database_url_aws
@@ -49,7 +50,7 @@ def get_db():
 
 
 def check_database_connection(cloud: str | None = None) -> dict:
-    selected_cloud = cloud or settings.active_cloud
+    selected_cloud = cloud or get_active_cloud()
 
     try:
         engine = create_database_engine(selected_cloud)
@@ -73,7 +74,7 @@ def check_database_connection(cloud: str | None = None) -> dict:
 
 
 def init_database(cloud: str | None = None) -> dict:
-    selected_cloud = cloud or settings.active_cloud
+    selected_cloud = cloud or get_active_cloud()
 
     try:
         engine = create_database_engine(selected_cloud)
@@ -103,7 +104,7 @@ def init_all_databases() -> dict:
 
 
 def list_database_tables(cloud: str | None = None) -> dict:
-    selected_cloud = cloud or settings.active_cloud
+    selected_cloud = cloud or get_active_cloud()
 
     try:
         engine = create_database_engine(selected_cloud)
