@@ -1,3 +1,4 @@
+from app.schemas.cloud import CloudSwitchRequest, CloudSwitchResponse
 from app.schemas.customer import CustomerCreate, CustomerRead, CustomerUpdate
 from app.schemas.order import OrderCreate, OrderItemCreate, OrderItemRead, OrderRead, OrderUpdate
 from app.schemas.product import ProductCreate, ProductRead, ProductUpdate
@@ -14,4 +15,6 @@ __all__ = [
     "OrderRead",
     "OrderItemCreate",
     "OrderItemRead",
+    "CloudSwitchRequest",
+    "CloudSwitchResponse",
 ]

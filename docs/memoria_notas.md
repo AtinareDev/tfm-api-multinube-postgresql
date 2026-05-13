@@ -165,3 +165,16 @@ Se ha incorporado una protección básica mediante API key para endpoints admini
 La clave se envía mediante la cabecera HTTP `X-API-Key`. En esta fase se han protegido los endpoints `/cloud/status` y `/db/init`.
 
 Este mecanismo se utilizará también para proteger los futuros endpoints de conmutación entre clouds y sincronización de datos.
+
+
+
+
+## Fase 3 - Endpoint de conmutación de cloud activa
+
+Se ha implementado el endpoint administrativo `POST /cloud/switch`, protegido mediante API key.
+
+Este endpoint permite cambiar la cloud activa entre `aws` y `azure`. Antes de realizar el cambio, la API comprueba que la base de datos destino esté disponible mediante una comprobación de conexión.
+
+El cambio queda registrado en el archivo de estado local `cloud_state.json`, por lo que no es necesario reiniciar la API para cambiar entre proveedores simulados.
+
+En esta fase la conmutación todavía no realiza sincronización de datos. La sincronización previa al cambio se implementará en la fase siguiente.
