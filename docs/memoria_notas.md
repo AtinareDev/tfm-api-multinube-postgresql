@@ -101,3 +101,18 @@ Los endpoints permiten:
 - Eliminar clientes.
 
 La API utiliza SQLAlchemy para acceder a PostgreSQL y Pydantic para validar los datos de entrada y salida.
+
+
+## Fase 2 - CRUD de productos
+
+Se ha implementado el conjunto de endpoints CRUD para la entidad `products`.
+
+Los endpoints permiten:
+
+- Crear productos.
+- Listar productos.
+- Consultar un producto por identificador.
+- Actualizar los datos de un producto.
+- Eliminar productos.
+
+La entidad `products` incluye información básica como nombre, descripción, precio y stock disponible.

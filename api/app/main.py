@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 
 from app.api.routes.customers import router as customers_router
+from app.api.routes.products import router as products_router
 from app.core.config import settings
 from app.db.database import (
     check_database_connection,
@@ -15,6 +16,7 @@ app = FastAPI(
 )
 
 app.include_router(customers_router)
+app.include_router(products_router)
 
 
 @app.get("/")
