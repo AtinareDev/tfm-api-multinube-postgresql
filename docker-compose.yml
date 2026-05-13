@@ -7,6 +7,10 @@ services:
       - "8000:8000"
     volumes:
       - ./api:/app
+    environment:
+      ACTIVE_CLOUD: aws
+      DATABASE_URL_AWS: postgresql+psycopg2://tfm_user:tfm_password@postgres_aws:5432/tfm_db
+      DATABASE_URL_AZURE: postgresql+psycopg2://tfm_user:tfm_password@postgres_azure:5432/tfm_db
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
     depends_on:
       - postgres_aws
