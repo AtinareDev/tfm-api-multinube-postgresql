@@ -1,10 +1,11 @@
-from fastapi import FastAPI
+from fastapi import Depends, FastAPI
 
 from app.api.routes.customers import router as customers_router
 from app.api.routes.orders import router as orders_router
 from app.api.routes.products import router as products_router
 from app.core.cloud_state import get_active_cloud, get_available_clouds
 from app.core.config import settings
+from app.core.security import verify_api_key
 from app.db.database import (
     check_database_connection,
     init_all_databases,
@@ -39,7 +40,7 @@ def health_check():
 
 
 @app.get("/cloud/status")
-def cloud_status():
+def cloud_status(_: None = Depends(verify_api_key)):
     return {
         "active_cloud": get_active_cloud(),
         "available_clouds": get_available_clouds(),
@@ -62,7 +63,7 @@ def database_health_all():
 
 
 @app.post("/db/init")
-def database_init():
+def database_init(_: None = Depends(verify_api_key)):
     return init_all_databases()
 
 

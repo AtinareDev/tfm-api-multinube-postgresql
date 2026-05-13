@@ -154,3 +154,14 @@ Se ha sustituido el uso de una cloud activa fija por un mecanismo de estado din�
 La API puede consultar la cloud activa mediante `/cloud/status`, y la capa de conexión a base de datos utiliza dicho estado para decidir si las operaciones deben ejecutarse contra la base PostgreSQL que simula AWS o contra la base PostgreSQL que simula Azure.
 
 Inicialmente, la cloud activa se mantiene como `aws`.
+
+
+
+
+## Fase 3 - Seguridad administrativa con API key
+
+Se ha incorporado una protección básica mediante API key para endpoints administrativos de la API.
+
+La clave se envía mediante la cabecera HTTP `X-API-Key`. En esta fase se han protegido los endpoints `/cloud/status` y `/db/init`.
+
+Este mecanismo se utilizará también para proteger los futuros endpoints de conmutación entre clouds y sincronización de datos.
